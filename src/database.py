@@ -57,7 +57,7 @@ class EpisodeSchema(ma.Schema):
 
 class CharactersSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'species', 'image') 
+        fields = ('id', 'name', 'species', 'image', 'status') 
 
 characters_schema = CharactersSchema(many=True)
 
@@ -82,3 +82,14 @@ class ExceptionTracker(db.Model):
     endpoint = db.Column(db.String(255), nullable=True)
     http_method = db.Column(db.String(10), nullable=True)
     traceback = db.Column(db.Text, nullable=True)
+
+class SearchLogs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    request_headers = db.Column(db.JSON, nullable=True)
+    ip_address = db.Column(db.String(45), nullable=True)
+    user_agent = db.Column(db.String(255), nullable=True)
+    endpoint = db.Column(db.String(255), nullable=True)
+    success = db.Column(db.Boolean, nullable = False)
+    search_result_cached = db.Column(db.Boolean, nullable = False)
+    status_code = db.Column(db.Integer, nullable = False)
