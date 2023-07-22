@@ -5,7 +5,8 @@ def log_search(search_result, search_result_cached = False):
 
     search_results_log_entry = SearchLogs(
         request_headers=dict(request.headers),
-        ip_address=request.headers.get('X-Forwarded-For'),
+        # ip_address=request.headers.get('X-Forwarded-For'),
+        ip_address=request.remote_addr,
         user_agent=request.headers.get('User-Agent'),
         endpoint=request.url,
         success = search_result.get('data').get('success'),
