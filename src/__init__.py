@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from src.extensions.cache import cache
 from flasgger import Swagger
 from src.config.swagger import template, swagger_config
+from flask_cors import CORS
 import os
 
 load_dotenv()
@@ -28,6 +29,7 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
+    CORS(app)
     cache.init_app(app, config={'CACHE_TYPE': 'SimpleCache'})
 
     app.register_blueprint(search)
