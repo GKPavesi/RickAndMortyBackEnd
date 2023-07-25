@@ -1,0 +1,86 @@
+---
+tags:
+  - Search
+
+parameters:
+  - in: path
+    name: character_id
+    description: The ID of the character to search for
+    type: integer
+    required: true
+
+responses:
+  200:
+    description: The character matching the ID
+    schema:
+      $ref: '#/definitions/Character'
+
+  400:
+    description: The request was invalid
+
+  404:
+    description: No character was found matching the ID
+
+definitions:
+  Character:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The ID of the character
+      name:
+        type: string
+        description: The name of the character
+      status:
+        type: string
+        description: The status of the character
+      species:
+        type: string
+        description: The species of the character
+      type:
+        type: string
+        description: The type of the character
+      gender:
+        type: string
+        description: The gender of the character
+      image:
+        type: string
+        description: The image of the character
+      origin_location:
+        $ref: '#/definitions/Location'
+      current_location:
+        $ref: '#/definitions/Location'
+      most_recent_episode:
+        $ref: '#/definitions/Episode'
+
+  Location:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The ID of the location
+      name:
+        type: string
+        description: The name of the location
+      type:
+        type: string
+        description: The type of the location
+      dimension:
+        type: string
+        description: The dimension of the location
+
+  Episode:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The ID of the episode
+      name:
+        type: string
+        description: The name of the episode
+      air_date:
+        type: string
+        description: The air date of the episode
+      episode:
+        type: string
+        description: The episode number

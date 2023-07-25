@@ -5,6 +5,8 @@ from src.utils.exception_tracker_log import log_exception
 from src.constants.http_status_codes import *
 from dotenv import load_dotenv
 from src.extensions.cache import cache
+from flasgger import Swagger
+from src.config.swagger import template, swagger_config
 import os
 
 load_dotenv()
@@ -17,6 +19,11 @@ def create_app():
         SECRET_KEY = os.environ.get('SECRET_KEY'),
         SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI'),
         SQLALCHEMY_TRACK_MODIFICATIONS = False,
+
+        SWAGGER = {
+            'title': 'Rick And Morty Backend Api',
+            'uiversion': 3
+        }
     )
 
     db.init_app(app)
@@ -24,6 +31,8 @@ def create_app():
     cache.init_app(app, config={'CACHE_TYPE': 'SimpleCache'})
 
     app.register_blueprint(search)
+
+    Swagger(app, config = swagger_config, template = template)
 
     @app.errorhandler(HTTP_404_NOT_FOUND)
     def handle_404(e):

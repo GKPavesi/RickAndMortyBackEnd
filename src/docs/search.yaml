@@ -1,0 +1,62 @@
+---
+tags:
+  - Search
+
+parameters:
+  - in: query
+    name: name
+    description: The name of the character to search for
+    required: true
+  - in: query
+    name: page
+    description: The page number of the results
+    default: 1
+
+responses:
+  200:
+    description: A list of characters matching the search criteria
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the search was successful
+        page:
+          type: integer
+          description: The current page number
+        pages:
+          type: integer
+          description: The total number of pages
+        total:
+          type: integer
+          description: The total number of characters
+        characters:
+          type: array
+          items:
+            $ref: '#/definitions/Characters'
+
+  400:
+    description: The request was invalid
+
+  404:
+    description: No characters were found matching the search criteria
+
+definitions:
+  Characters:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The ID of the character
+      name:
+        type: string
+        description: The name of the character
+      status:
+        type: string
+        description: The status of the character
+      species:
+        type: string
+        description: The species of the character
+      image:
+        type: string
+        description: The image of the character
