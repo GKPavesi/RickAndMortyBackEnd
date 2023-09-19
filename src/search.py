@@ -5,6 +5,8 @@ from src.constants.http_status_codes import *
 from src.extensions.cache import cache
 from src.utils.searchs_log import log_search
 from flasgger import swag_from
+from src.authenticatewithtoken import authenticate_with_firebase_token
+
 import math
 
 search = Blueprint('search', __name__, url_prefix='/search')
@@ -12,6 +14,7 @@ search = Blueprint('search', __name__, url_prefix='/search')
 
 @search.get('/')
 @swag_from('./docs/search.yaml')
+@authenticate_with_firebase_token
 def handle_search():
     try:
 
@@ -100,10 +103,9 @@ def handle_search():
 
 
 
-
-
 @search.get('/<int:character_id>')
 @swag_from('./docs/search_by_id.yaml')
+@authenticate_with_firebase_token
 def handle_search_by_id(character_id=None):
 
     try:  

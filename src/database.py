@@ -75,11 +75,11 @@ character_schema = CharacterSchema()
 class ExceptionTracker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    error_message = db.Column(db.String(1000), nullable=False)
+    error_message = db.Column(db.Text, nullable=True)
     request_headers = db.Column(db.JSON, nullable=True)
     ip_address = db.Column(db.String(45), nullable=True)
-    user_agent = db.Column(db.String(255), nullable=True)
-    endpoint = db.Column(db.String(255), nullable=True)
+    user_agent = db.Column(db.String(500), nullable=True)
+    endpoint = db.Column(db.String(500), nullable=True)
     http_method = db.Column(db.String(10), nullable=True)
     traceback = db.Column(db.Text, nullable=True)
 
@@ -93,3 +93,19 @@ class SearchLogs(db.Model):
     success = db.Column(db.Boolean, nullable = False)
     search_result_cached = db.Column(db.Boolean, nullable = False)
     status_code = db.Column(db.Integer, nullable = False)
+
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    firebase_uid = db.Column(db.String(200), nullable = False, unique = True)
+    first_name = db.Column(db.String(125), nullable = False)
+    last_name = db.Column(db.String(125), nullable = False)
+    email = db.Column(db.String(200), nullable = False, unique = True)
+
+class UserSchema(ma.Schema):
+    firebase_uid = ma.String(required=True)
+    first_name = ma.String(required=True)
+    last_name = ma.String(required=True)
+    email = ma.String(required=True)
+
+user_schema = UserSchema()

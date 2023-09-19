@@ -5,3 +5,4 @@ venv
 importScripts
 backupdatabase
 backupdatabaseprod
+/src/firebase/firebase-rick-and-morty.json
